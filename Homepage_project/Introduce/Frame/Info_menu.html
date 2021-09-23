@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메뉴</title>
+    <style>
+    #Resume li:after{
+		content: ' |';
+	}
+	#Resume li:last-child:after{ /*마지막은 추가 안함*/
+		content: '';
+	}
+    #Resume{
+        list-style-type: none;
+        
+    }
+    #Resume > li{
+        float: left;
+    }
+    #Resume > li > a {
+        text-decoration: none;
+        color:black;
+    }
+    </style>
+    <script src="../js/Content.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul id = "Resume">
+                <li><a href = "#Myself" onclick="changes();">자기소개</a></li>
+                <li><a href = "#Education">학력사항</a></li>
+                <li><a href = "#Career">경력사항</a></li>
+                <li><a href = "#Certificate">보유 자격증</a></li>
+            </ul>
+        </nav>
+    </header>
+</body>
+</html>

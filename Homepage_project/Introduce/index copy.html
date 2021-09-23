@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+
+div             	{ padding:10px;}
+#container			{ height: 300px;}
+#Info_Header		{height:310px; display: flex;}
+#Info_Content		{ background-color:#F5F5F5; display: flex; height: 100%;}
+/* 디자인 참고 : https://iredays.tistory.com/59 */
+</style>
+<script src="./Introduce/js/Content.js"></script>
+<script src="Introduce/js/includeHTML.js"></script>
+<script src="Introduce/js/blog.js"></script>
+<title>자기소개</title>
+</head>
+	<body>
+		<div id="container">
+			<header include-html="Introduce/Frame/Info_Header.html"></header>
+			<nav include-html="Introduce/Frame/Info_Content.html"></nav>
+		</div>
+	</body>
+	<script>
+		includeHTML();
+		blog();
+	</script>
+</html>
