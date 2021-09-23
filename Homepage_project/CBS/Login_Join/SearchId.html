@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>아이디 찾기</title>
     <!-- 글꼴 추가-->
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
@@ -12,15 +12,23 @@
         body{
             font-family: "Nanum Gothic", sans-serif;
         }
+        .button_w {
+            background-color: teal;
+            border: 0px;
+            border-radius: 5px;
+            color: white;
+            width: 100%;
+            height: 30px;
+        }
+        table {
+            margin: auto;
+        }
+        form{
+            padding: 30px;
+        }
     </style>
-    <script src = "../js/Login_Join/Login.js"></script>
-    <script>
-        function login(){
-            var id = document.getElementById('userId').value;
-            var idcheck = document.getElementById('idcheck');
-            idcheck.innerText = id; /*값 전달 완료*/    
-    }
-    </script>
+    <script type = "text/javascript" src = "../js/Login_Join/Login.js"></script>
+    <script type = "text/javascript" src = "../js/jqurey/jquery-3.6.0.js"></script>
 </head>
 <body>
     <!--
@@ -30,26 +38,33 @@
     <form target = "idpwd" action="Loginpage.html" method="GET">
         <table>
             <tr>
-                <td><label for="Search_username"ZZ>이름 </label></td>
-                <td><input type="text" id="Search_username" name="Search_username"></td>
+                <td><label for="Search_username">이름 </label></td>
+                <td>: <input type="text" id="Search_username" name="Search_username"></td>
             </tr>
             <tr>
                 <td><label for="Search_phone">전화번호 </label></td>
-                <td><input type="text" id="Search_phone" name="Search_phone" placeholder="01000000000"></td>
+                <td>: <input type="text" id="Search_phone" name="Search_phone" placeholder="01000000000"></td>
             </tr>
             <tr>  
-                <td><label for="Search_eamil">이메일 </label></td>
-                <td><input type="text" id="Search_eamil" name="Search_eamil" placeholder="text@naver.com"></td>
-            </tr>
-            <tr>  
-                <td><input type="submit" value="아이디조회" onclick="login();"></td>
+                <td><input type="submit" class="button_w" value="로그인" onclick="location.href='./Loginpage.html'"></td>
+                <td><input type="submit" class="button_w" value="아이디조회" onclick="search_id();"></td>
             </tr>
         </table>
     </form>
-    <h1 id = "idcheck"></h1>
     <!--
         - html 속 html -
         https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=javaking75&logNo=140159769153
     -->
+    <script>
+        function search_id(){
+            const entries = JSON.parse(localStorage.getItem('info_user')) || [];
+            const entry = entries.find(element => element.username == $('#Search_username').val() && element.phone == $('#Search_phone').val());
+            if(entry == null){
+                alert('정보에 해당하는 아이디가 없습니다. \n관리자에게 문의해주세요.');
+            } else{
+                alert(`아이디는 ${entry.userid}입니다.`);
+            }
+        }
+    </script>
 </body>
 </html>

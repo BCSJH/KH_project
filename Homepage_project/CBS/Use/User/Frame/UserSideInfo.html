@@ -6,24 +6,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
     <style>
+        body {
+            text-align: center;
+        }
+        ul {
+            text-align: center;
+        }
+        ul li:after {
+            color: white;
+            content: ' |';
+        }
+        ul li:last-child:after { /*마지막은 추가 안함*/
+            content: '';
+        }
         ul li{
-            color: black;
             list-style-type: none;
+            display: inline;
         }
         ul li a{
             text-decoration: none;
         }
-        #User_Content{
-            color: black;
+        [name =User_Content]{
+            color: gray;
+        }
+        #Voucher{
+            color: white;
         }
     </style>
+    <script type ="text/javascript" src="../../../js/jqurey/jquery-3.6.0.js"></script>
 </head>
 <body>
-    <ul>
-        <li><a href= ".././Content/User.html" id = "User_Content" name = "User_Content" target="User_Content">회원 정보</a></li>
-        <li><a href= ".././Content/Voucher.html" id = "User_Content" name = "User_Content" target="User_Content">이용권 구매</a></li>
-        <li><a href= ".././Content/Food.html" id = "User_Content" name = "User_Content" target="User_Content">음식 구매</a></li>
-        <li><a href= ".././Content/Game.html" id = "User_Content" name = "User_Content" target="User_Content">미니게임</a></li>
-    </ul>
+    <div>
+        <ul>
+            <li><a href= ".././Content/User.html" id = "User" name = "User_Content" target="User_Content" onclick="Voucher_check('User');">회원 정보</a></li>
+            <li><a href= ".././Content/Voucher.html" id = "Voucher" name = "User_Content" target="User_Content" onclick="Voucher_check('Voucher');">이용권 구매</a></li>
+            <li><a href= ".././Content/Food.html" id = "Food" name = "User_Content" target="User_Content" onclick="Voucher_check('Food');">음식 구매</a></li>
+            <li><a href= ".././Content/Game.html" id = "Game" name = "User_Content" target="User_Content" onclick="Voucher_check('Game');">미니게임</a></li>
+        </ul>
+    </div>
+    <script>
+        window.onload = function(){
+
+        };
+        const Voucher_check = (name) => {
+            $('a').css("color", "gray");
+            var search = parent.location.search;
+            var params = new URLSearchParams(search);
+            var userid_href= params.get('userid');
+            
+            const entries = JSON.parse(localStorage.getItem('user_use')) || [];
+            const use = entries.find(element => element.userid == userid_href && element.use_esc !== 1);
+            if(use == null){ // 사용자가 이용했을때 조건 하나더 -> 이전에 이용한 것 말고
+                if(name !== 'Voucher'){   
+                    alert("이용권을 구매해주세요.");
+                    $(this).click(function(ignore){
+                        ignore.preventDefault();
+                    });
+                }
+            } else{
+                $(`#${name}`).css("color","white");
+            }
+        }
+    </script>
 </body>
 </html>

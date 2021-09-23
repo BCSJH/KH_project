@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 변경 화면</title>
     <!-- 글꼴 추가-->
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
@@ -11,9 +11,30 @@
         /*글꼴 추가*/
         body{
             font-family: "Nanum Gothic", sans-serif;
+            height: 100%;
+            text-align: center;
+        }
+        .button_w {
+            background-color: teal;
+            border: 0px;
+            border-radius: 5px;
+            color: white;
+            width: 100%;
+            height: 30px;
+        }
+        table {
+            margin: auto;
+        }
+        .none_display{
+            display: none;
+        }
+        form{
+            padding: 30px;
         }
     </style>
     <script src = "../js/Login_Join/Login.js"></script>
+    <script src = "../js/jqurey/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
     <script>
         function login(){
             var id = document.getElementById('userId').value;
@@ -27,29 +48,138 @@
         - GET(기본값) : 사용자입력값 url노출
         - POST       : 사용자입력값 url노출되지 않음
     -->
-    <form target = "idpwd" action="Loginpage.html" method="GET">
+    <form target = "idpwd" id = 'contact-form' action="Loginpage.html" method="GET">
         <table>
             <tr>
                 <td><label for="Change_userid">아이디 </label></td>
-                <td><input type="text" id="Change_userid" name="Change_userid"></td>
+                <td>: <input type="text" id="Change_userid" name="Change_userid"></td>
             </tr>
             <tr>    
                 <td><label for="Change_phone">전화번호 </label></td>
-                <td><input type="text" id="Change_phone" name="Change_phone" placeholder="01000000000"></td>
+                <td>: <input type="text" id="Change_phone" name="Change_phone" maxlength="11" placeholder="01000000000"></td>
             </tr>
             <tr>
-                <td><label for="Change_eamil">이메일 </label></td>
-                <td><input type="text" id="Change_eamil" name="Change_eamil" placeholder="text@naver.com"></td>
+                <td><label for="Change_email">이메일 </label></td>
+                <td>: <input type="text" id="Change_email" name="Change_email" placeholder="text@naver.com"></td>
             </tr>
+            <tr class = "none_display">
+                <td><input class="none_display" name="contact_number" id = "contact_number"></td>
+                <td><input class="none_display" name="to_name" id = "to_name"></td>
+                <td><input  class="none_display"name="from_name" id = "from_name"></td>
+                <td><input class="none_display" name="to_email" id = "to_email"></td>
+                <td><textarea  class="none_display" style ="visibility: hidden;" name="message" id ="message"></textarea></td>
+            </tr>
+            <tr id = "authcode" class = "delete_"></tr>  
             <tr>
-                <td><input type="submit" value="비밀번호 변경" onclick="login();"></td>
-            </tr>   
+                <td><input type="button" class = "button_w" value="로그인" onclick="parent.location.reload();"></td>
+                <td><input type="submit" class = "button_w" value="비밀번호 변경"></td>
+                <!-- <td><input type="submit" class = "button_w" value="비밀번호 변경" onclick="pwd_change();"></td> -->
+            </tr>
         </table>
     </form>
-    <h1 id = "idcheck"></h1>
+    <!-- <form id = 'contact-form'>
+        <input type="hidden" name="contact_number" id = "contact_number">
+        <input type="hidden" name="to_name" id = "to_name"> 
+        <input type="hidden" name="from_name" id = "from_name">
+        <input type="hidden" name="to_email" id = "to_email"> 
+        <textarea style ="visibility: hidden;" name="message" id ="message"></textarea>
+        <input type="submit" value="Send">
+    </form> -->
     <!--
         - html 속 html -
         https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=javaking75&logNo=140159769153
     -->
 </body>
+<script>
+    window.onload = function() { // form id, #contact-form 안에 있는 것들 전송 
+        document.getElementById('contact-form').addEventListener('submit', function(event) { 
+            event.preventDefault(); 
+            alert("이메일 전송 기능입니다.")
+            }); 
+    };
+    function authcode_func(authcode){
+        console.log($(authcode).children().length);
+        if($('#authcode').children().length == 0){
+            const entries = JSON.parse(localStorage.getItem('info_user')) || []; //Change_userid, Change_phone
+            const entry = entries.find(element => element.userid == $('#Change_userid').val() && element.phone == $('#Change_phone').val());
+            if(typeof entry !== "undefined"){
+                const tag = `<td>인증번호</td><td><input type="text" id = "authcode_chk"></td>`;
+                const tag_btn = `<tr class = "delete_"><td colspan="2"><input style="width:100%;" type="button" class = "button_w" onclick = "authcode_btn();" value = "인증번호 확인"></td></tr>`;
+                $('#authcode').append(tag);
+                $("#authcode").after(tag_btn);
+                return true;
+            }else{
+                alert("존재하지 않는 정보입니다.");
+                return false;
+            }
+        }else{
+            alert("인증번호를 입력해주세요.");
+            return false;
+        }
+    }
+
+    //비밀번호 일치 확인 및 비밀번호 유효성 검사
+    function pwd_same_chk(){
+        const pwdReg = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/g; //숫자/문자/특수문자가 포함된 8-15자리 이내의 암호
+        const pwd_input_1 = $("#pwd_input_1").val(); // 비밀번호 입력 값 1
+        const pwd_input_2 = $("#pwd_input_2").val();// 비밀번호 입력 값 2
+        if(!pwdReg.test(pwd_input_1)){ // 유효성 테스트
+            alert("숫자/문자/특수문자가 포함된 8-15자리 이내의 암호로 구성되어야 합니다.");
+        }else if(pwd_input_1 !== pwd_input_2){
+            alert("비밀번호가 일치하지 않습니다.");
+        }else{
+            change_pwd_save(pwd_input_1); //변경한 비밀번호 저장
+        }
+        
+    }
+
+    //변경한 비밀번호 저장
+    function change_pwd_save(change_password){
+        const entries = JSON.parse(localStorage.getItem('info_user')) || [];
+        const userid = $('#to_name').val();
+        const entry = entries.find(element => element.userid == userid);
+        const indexs = entries.indexOf(entry);
+        entry.password1 = change_password;
+        entries.splice(indexs, 1); // 해당 값만 지움
+        entries.push(entry);
+        localStorage.setItem('info_user',JSON.stringify(entries));
+        alert('변경되었습니다.');
+        parent.window.location.reload();
+    }
+
+    //인증번호 입력 버튼 클릭시 발생
+    function authcode_btn(){
+        const user_authcode = $("#authcode_chk").val();
+        const authcode = $("#contact_number").val();
+        if(user_authcode == ""){
+            alert("인증번호를 입력해주세요.");
+        }
+        else{
+            if(user_authcode == authcode){
+                alert("인증번호가 일치합니다.\n수정할 비밀번호를 입력해주세요.");
+                pwd_change_func();
+            }
+        }
+    }
+
+    //비밀번호 입력 생성 함수
+    function pwd_change_func(){
+        $('.delete_').remove();
+        const tag1 = `<tr><td>비밀번호 입력</td><td>: <input type="password" id = "pwd_input_1"></td></tr>`;
+        const tag2 = `<tr><td>비밀번호 확인</td><td>: <input type="password" id = "pwd_input_2"></td></tr>`;
+        $('tr.none_display').after(tag2);
+        $('tr.none_display').after(tag1);
+    }
+
+    function pwd_change(){
+        $("input[name='contact_number']").val(Math.random() * 100000 | 0);
+        $('[name=email]').val() == $("#Change_eamil").val();
+
+        $('[name=to_name]').val() == $("#Change_userid").val();
+        $('[name=from_name]').val() == "cbs_manager";
+        $('[name=message]').val() == "페이지에 인증번호를 입력해주세요.";
+        console.log(document.getElementById('contact-form'));
+        emailjs.sendForm('kh_project', 'template_ecwjx3a', document.getElementById('contact-form'));
+    }
+</script>
 </html>

@@ -1,12 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 정보</title>
+    <script type ="text/javascript" src = "../../../js/User/User_Info.js"></script>
 </head>
+    <style>
+        body table{
+            margin: auto;
+        }
+        table tr td:nth-child(1){
+            text-align: center;
+        }
+
+        table tr th {
+            background-color: darkcyan;
+            color: white;
+        }
+        table thead tr th{
+            height: 30px;
+        }
+        table{
+            width: 400px;
+        }
+        input#pwd, input#password_ch_btn{
+            width: 100%;
+            border: 0px;
+            border-radius: 3px;
+            background-color: #c4e0e0;
+        }
+    </style>
 <body>
-    회원 정보
+    <table>
+        <thead>
+            <tr>
+                <th>목록</th>
+                <th colspan="2">회원정보</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id = "userid"><td>아이디</td></tr>
+            <tr id = "password1">
+                <td id = "two">비밀번호</td>
+                <td><input type = "button" id = "pwd" value="비밀번호 수정" onclick = 'pwd_change();'></td>
+            </tr>
+            <!-- <tr id = "password_change"><td>비밀번호 변경</td></tr> -->
+            <tr id = "username"><td>이름</td></tr>
+            <tr id = "phone"><td>전화번호</td></tr>
+            <tr id = "reg_Date"><td>가입일</td></tr>
+            <tr id = "email"><td>이메일</td></tr>
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
 </body>
 </html>

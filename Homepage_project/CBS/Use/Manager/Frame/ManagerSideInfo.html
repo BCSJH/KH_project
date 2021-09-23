@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        ul{
+            text-align: center;
+        }
+        ul li:after {
+            color: white;
+            content: ' |';
+        }
+        ul li:last-child:after { /*마지막은 추가 안함*/
+            content: '';
+        }
+        ul li{
+            list-style-type: none;
+            display: inline;
+        }
+        ul li a{
+            text-decoration: none;
+            color: gray;
+        }
+        #Manager_Content {
+            color : gray;
+        }
+        #Month{
+            color: white;
+        }
+    </style>
+</head>
+<script type ="text/javascript" src="../../../js/jqurey/jquery-3.6.0.js"></script>
+<script>
+    function colors(name){
+        $('a').css("color", "gray");
+        $(`#${name}`).css("color", "white");
+    }
+</script>
+<body>
+    <ul>
+        <li><a href= ".././Content/Month.html" id = "Month" name = "Manager_Content" target="Manager_Content" onclick="colors('Month');">한달 매출</a></li>
+        <li><a href= ".././Content/Oneday.html" id = "Oneday" name = "Manager_Content" target="Manager_Content" onclick="colors('Oneday');">하루 매출</a></li>
+        <li><a href= ".././Content/Member.html" id = "Member" name = "Manager_Content" target="Manager_Content" onclick="colors('Member');">회원 정보</a></li>
+        <li><a href= ".././Content/Today.html" id = "Today" name = "Manager_Content" target="Manager_Content" onclick="colors('Today');">현재 이용</a></li>
+        <li><a href= ".././Content/Food.html" id = "Food" name = "Manager_Content" target="Manager_Content" onclick="colors('Food');">음식 주문</a></li>
+    </ul>
+</body>
+</html>

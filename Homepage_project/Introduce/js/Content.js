@@ -5,12 +5,13 @@ let Info_Header = parent.document.getElementById("Info_Header");
 function changes(name){
 
     one_color(name);// 메뉴 선택한 값 하얗게 만들기
-    
     if(name == "a_Home"){
         fadeIn(Info_SideInfo);
         original_header(Info_Header, Info_Content);
+        console.log(Info_Content);
+        $(Info_Content).find('iframe').attr('scrolling', 'yes');
         All_display(name);
-    
+        $("#hobby").css('display','none');
         // Info_SideInfo.style.display = "block"; // sns 박스 값들 없애기
     }
     else{

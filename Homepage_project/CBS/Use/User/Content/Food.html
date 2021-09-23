@@ -5,8 +5,257 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>음식 구매</title>
+    <style>
+        table{
+            margin: auto;
+        }
+        th{
+            width: 100px;
+        }
+        input{
+            width: 50px;
+        }
+        td{
+            text-align: center;
+        }
+        .food_type{
+            background-color: darkcyan;
+            color: white;
+        }
+        .food_name{
+            opacity: 0.8;
+        }
+        .food_r_name{
+            opacity: 0.5;
+        }
+        img{
+            background-color: white;
+        }
+        .font_b{
+            font-weight: bold;
+        }
+        #food_types tbody tr:nth-child(1){
+            background-color: #7bc0c0;
+            color: black;
+        }
+        input[name = menu_click]{
+            background-color: #31a0a0;
+            color: white;
+            border: 0px;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            width: 50px;
+        }
+        input[name = food_buy]{
+            background-color: #31a0a0;
+            color: white;
+            border: 0px;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            width: 50px;
+        }
+        #sum_table{
+            padding-top: 20px;
+        }
+    </style>
+    <script type ="text/javascript" src="../../../js/jqurey/jquery-3.6.0.js"></script>
 </head>
 <body>
-    음식 구매
+    <table id = "food_types">
+        <thead>
+            <tr>
+                <th class = "food_type" colspan="6">음식</th>
+                <th class = "food_type" colspan="6">음료</th>
+            </tr>
+            <tr>
+                <td class = "food_type food_name" colspan="2">꼬불꼬불</td>
+                <td class = "food_type food_name" colspan="2">달콤매콤</td>
+                <td class = "food_type food_name" colspan="2">치즈듬뿍</td>
+                <td class = "food_type food_name" colspan="2">인생쓴맛</td>
+                <td class = "food_type food_name" colspan="2">달달구리</td>
+                <td class = "food_type food_name" colspan="2">톡톡쏘는</td>
+            </tr>
+            <tr>
+                <th class = "food_type food_name food_r_name" colspan="2">라면</th>
+                <th class = "food_type food_name food_r_name" colspan="2">떡볶이</th>
+                <th class = "food_type food_name food_r_name" colspan="2">피자</th>
+                <th class = "food_type food_name food_r_name" colspan="2">아메리카노</th>
+                <th class = "food_type food_name food_r_name" colspan="2">아이스티</th>
+                <th class = "food_type food_name food_r_name" colspan="2">콜라</th>
+            </tr>
+            <tr>
+                <td colspan="2"><img src = "../../../image/food/ramen.png" width="100px" height="100px"></td>
+                <td colspan="2"><img src = "../../../image/food/tteokbokki.jpg" width="100px" height="100px"></td>
+                <td colspan="2"><img src = "../../../image/food/pizza.jpg" width="100px" height="100px"></td>
+                <td colspan="2"><img src = "../../../image/food/americano.png" width="100px" height="100px"></td>
+                <td colspan="2"><img src = "../../../image/food/icetee.jpeg" width="100px" height="100px"></td>
+                <td colspan="2"><img src = "../../../image/food/cola.jfif" width="100px" height="100px"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="font_b" colspan="2">3000원</td>
+                <td class="font_b" colspan="2">2500원</td>
+                <td class="font_b" colspan="2">3500원</td>
+                <td class="font_b" colspan="2">2000원</td>
+                <td class="font_b" colspan="2">2500원</td>
+                <td class="font_b" colspan="2">1500원</td>
+            </tr>
+            <tr>
+                <!--라면 https://littledeep.com/korean-noodle-illustration/ 
+                    떡볶이 https://ac-illust.com/ko/clip-art/2560324/%EB%96%A1%EB%B3%B6%EC%9D%B4
+                    피자 https://kr.freepik.com/free-vector/colorful-round-tasty-pizza_3799722.htm#&position=0
+                    아메리카노 https://pixabay.com/ko/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2320371">Pixabay</a>로부터 입수된 <a href="https://pixabay.com/ko/users/eommina-1183101/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2320371">
+                    아이스티 https://ac-illust.com/ko/clip-art/1365759/%EC%95%84%EC%9D%B4-%EC%8A%A4%ED%8B%B0
+                    콜라 http://m.danawa.com/product/product.html?code=10652988&cateCode=1623180-->
+                <td><input type = "button" name = "menu_click" id = "ramen_p" value = "+"></td>
+                <td><input type = "button" name = "menu_click" id = "ramen_m" value = "-"></td>
+                <td><input type = "button" name = "menu_click" id = "tteokbokki_p" value = "+"></td>
+                <td><input type = "button" name = "menu_click" id = "tteokbokki_m" value = "-"></td>
+                <td><input type = "button" name = "menu_click" id = "pizza_p" value = "+"></td>
+                <td><input type = "button" name = "menu_click" id = "pizza_m" value = "-"></td>
+                <td><input type = "button" name = "menu_click" id = "americano_p" value = "+"></td>
+                <td><input type = "button" name = "menu_click" id = "americano_m" value = "-"></td>
+                <td><input type = "button" name = "menu_click" id = "icetee_p" value = "+"></td>
+                <td><input type = "button" name = "menu_click" id = "icetee_m" value = "-"></td>
+                <td><input type = "button" name = "menu_click" id = "cola_p" value = "+"></td>
+                <td><input type = "button" name = "menu_click" id = "cola_m" value = "-"></td>
+            </tr>
+        </tbody>
+        </table>
+        <table id = "sum_table">
+            <tr><td colspan="3">총 금액 : </td><td id = "sum_food_price">0</td><td>원</td></tr>
+            <tr><td colspan="5"><input type ="button" name = "food_buy" value = "구매하기" style="width: 200px;"></td></tr>
+        </table>
+        <script>
+            const food_order = function(userid, use_date, use_time, food, cook_chk){
+                this.userid = userid;
+                this.use_date = use_date;
+                this.use_time = use_time;
+                this.food = food;
+                this.cook_chk = cook_chk;
+            }
+
+            let food_local_save = (foods) => {
+                let currentTime = new Date();
+                let year = currentTime.getFullYear(); // 년도
+                let month = currentTime.getMonth() + 1;  // 월
+                let date = currentTime.getDate();  // 날짜
+                let hour = currentTime.getHours();
+                let minute = currentTime.getMinutes();
+                let second = currentTime.getSeconds();
+                
+                let use_date = year+"/"+month +"/"+date;
+                let use_time = hour+":"+minute+":"+second;
+
+                const search = parent.location.search;
+                const params = new URLSearchParams(search);
+                const userid_href= params.get('userid');
+
+                let food_order_menu = new food_order(userid_href, use_date, use_time, foods, 0);
+                save(food_order_menu);
+
+            }
+
+            const save = (food_order_menu) => {
+                const entries = JSON.parse(localStorage.getItem('food_order')) || [];
+                entries.push(food_order_menu);
+
+                localStorage.setItem('food_order',JSON.stringify(entries));
+            }
+
+            $('input[name = food_buy]').on('click', function(){
+                let sum_food = $('#sum_food_price').text();
+                let food_num_chk = "";
+                let all_order = "";
+                const foods = [];
+                if(sum_food !== '0'){ // 주문한 음식이 있다면
+                    // alert(console.log($(`#${food_name.split('_')[0]}_price`).text()))
+                    $("tr[id *= '_price']").each(function(){
+                        all_order += $(this).text() + "\n";
+                        let $a = $(this).find('td');
+                        foods.push({
+                            food_id : $($a.eq(0)).text(), 
+                            food_num : $($a.eq(1)).text(), 
+                            food_price : $($a.eq(3)).text()
+                        });
+                        console.log(foods);
+                    });
+                    all_order += "\n총 금액 : " + $('#sum_food_price').text() + "원"; // 총 금액
+                    alert(all_order + "주문하시겠습니까?"); //취소 확인 버튼 생성
+                    console.log(all_order);
+                    food_local_save(foods);
+                }
+                else{
+                    alert('선택한 음식이 없습니다.');
+                }
+            });
+
+            $('input[name = menu_click]').on('click',function(){
+                const food_name = this.id;
+                const food_price = food_price_fnc(food_name);
+                const food_k_name = food_name_fnc(food_name);
+                const food_n = food_price > 0 ? 1 : -1;
+                // console.log(food_name.split('_')[0]);
+                // console.log($(`#${food_name.split('_')[0]}`));
+                if($(`#${food_name.split('_')[0]}_price`).length == 0){
+                    if(food_price > 0){
+                        let a = `<tr id = '${food_name.split('_')[0]}_price'><td>${food_k_name}</td><td id = '${food_name.split('_')[0]}_num'>${food_n}</td><td>개</td><td id = '${food_name.split('_')[0]}_food_price'>${food_price}</td><td>원</td></tr>`;   
+                        // console.log(`<tr id = '${food_name.split('_')[0]}'><td>${food_k_name}</td><td>${food_price}</td><td>원</td></tr>`);
+                        $(`#sum_food_price`).text(Number($(`#sum_food_price`).text()) + food_price);
+                        $('#sum_table').prepend(a);
+                    }
+                }else{ //존재한다면
+                    const price_save = $(`#${food_name.split('_')[0]}_food_price`);
+                    const food_num = $(`#${food_name.split('_')[0]}_num`);
+                    $(price_save).text(Number(price_save.text()) + food_price);
+                    $(food_num).text(Number($(food_num).text()) + food_n);
+                    if($(price_save).text() == 0){
+                        $(`#${food_name.split('_')[0]}_price`).remove();
+                    }
+                    $(`#sum_food_price`).text(Number($(`#sum_food_price`).text()) + food_price);
+                }
+
+            });
+            const food_price_fnc = (food_name) => {
+                let price = 0; //음식의 값 저장
+                let name = food_name.split('_')[0];
+                let pm = food_name.split('_')[1];
+
+                if(name == 'ramen'){
+                    price = (pm == 'p'? 3000: -3000);
+                }else if(name == 'tteokbokki'){
+                    price = (pm == 'p'? 2500: -2500);
+                }else if(name == 'pizza'){
+                    price = (pm == 'p'? 3500: -3500);
+                }else if(name == 'americano'){
+                    price = (pm == 'p'? 2000: -2000);
+                }else if(name == 'icetee'){
+                    price = (pm == 'p'? 2500: -2500);
+                }else if(name == 'cola'){
+                    price = (pm == 'p'? 1500: -1500);
+                }
+                return price;
+            };
+            const food_name_fnc = (food_name) => {
+                let name = food_name.split('_')[0];
+                if(name == 'ramen'){
+                    name = '라면';
+                }else if(name == 'tteokbokki'){
+                    name = '떡볶이';
+                }else if(name == 'pizza'){
+                    name = '피자';
+                }else if(name == 'americano'){
+                    name = '아메리카노';
+                }else if(name == 'icetee'){
+                    name = '아이스티';
+                }else if(name == 'cola'){
+                    name = '콜라';
+                }
+                return name;
+            }
+        </script>
 </body>
 </html>

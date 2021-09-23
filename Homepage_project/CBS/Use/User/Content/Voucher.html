@@ -5,8 +5,116 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이용권 구매</title>
+    <script type = "text/javascript" src="../../../js/jqurey/jquery-3.6.0.js"></script>
+    <script type ="text/javascript" src="../../../js/User/User_timer.js"></script>
+    <script type ="text/javascript" src="../../../js/User/User_Voucher.js"></script>
 </head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+    }
+    table{
+        text-align: center;
+    }
+    table thead tr:nth-child(1){
+        height: 30px;
+        background-color: darkcyan;
+        color: white;
+    }
+    table thead tr:nth-child(3){
+        height: 30px;
+        background-color: darkcyan;
+        color: white;
+        opacity: 0.5;
+    }
+    table thead th{
+        width: 100px;
+    }
+    .button_w{
+        font-size: 20px;
+        font-weight: bold;
+        border: 0px;
+        background-color: #c4e0e0;
+        color: black;
+        width: 50px;
+    }
+    .time_c{
+        background-color: #ddebeb;
+        color: black;
+    }
+    .font_b{
+        font-weight: bold;
+    }
+    .img_h{
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .buy_b{
+        border-radius: 5px;
+        background-color: black;
+        border: 0px;
+        color: white;
+    }
+    #buy_table tr td{
+        font-size: 20px;
+    }
+</style>
 <body>
-    이용권 구매
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">3분</td>
+                <th colspan="2">1시간</td>
+                <th colspan="2">2시간</td>
+                <th colspan="2">3시간</td>
+            </tr>
+            <tr>
+                <th class = "img_h" colspan="2"><img src = "../../../image/time/3min.png" width="100px" height="100px"></td>
+                <th class = "img_h" colspan="2"><img src = "../../../image/time/1h.png" width="100px" height="100px"></td>
+                <th class = "img_h" colspan="2"><img src = "../../../image/time/2h.png" width="100px" height="100px"></td>
+                <th class = "img_h" colspan="2"><img src = "../../../image/time/3h.png" width="100px" height="100px"></td>
+            </tr>
+            <tr>
+                <td class ="font_b" colspan="2">500원</td>
+                <td class ="font_b" colspan="2">3000원</td>
+                <td class ="font_b" colspan="2">5500원</td>
+                <td class ="font_b" colspan="2">8000원</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input class = "button_w font_b" type = "button" name = "minutes" id = "minutes_p" value = "+"></td>
+                <td><input class = "button_w font_b" type = "button" name = "minutes" id = "minutes_m" value = "-"></td>
+                <td><input class = "button_w font_b" type = "button" name = "hours" id = "one_p" value = "+"></td>
+                <td><input class = "button_w font_b" type = "button" name = "hours" id = "one_m" value = "-"></td>
+                <td><input class = "button_w font_b" type = "button" name = "hours" id = "two_p" value = "+"></td>
+                <td><input class = "button_w font_b" type = "button" name = "hours" id = "two_m" value = "-"></td>
+                <td><input class = "button_w font_b" type = "button" name = "hours" id = "three_p" value = "+"></td>
+                <td><input class = "button_w font_b" type = "button" name = "hours" id = "three_m" value = "-"></td>
+            </tr>
+            <tr>
+                <td class ="time_c font_b" id = "minutes_v" colspan="2">0</td>
+                <td class ="time_c font_b" id = "one_v" colspan="2">0</td>
+                <td class ="time_c font_b" id = "two_v" colspan="2">0</td>
+                <td class ="time_c font_b" id = "three_v" colspan="2">0</td>
+            </tr>
+        </tbody>
+
+    </table>
+    <table id = "buy_table" style="padding-left: 50px;">
+        <tr><th>총 구매 시간 : </th><td id = "sum_h">0.00</td><td>시간</td>
+            <td rowspan="2" style="padding-left: 10px;"><input class = "buy_b font_b" type = "button" value="이용권 구매" style="height: 150px;" onclick="save_check();"></td></tr>
+        <tr><th>총 구매 금액 : </th><td id = "sum_s">0</td><td>원</td></tr>
+    </table>
+    <script>
+        $('input[name=hours]').on('click', function(){
+        // console.log("도착");
+            pm(this.id);
+        });
+        $('input[name=minutes]').on('click',function(){
+            pm(this.id);
+        })
+    </script>
 </body>
 </html>

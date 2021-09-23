@@ -6,7 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>하루 매출</title>
 </head>
+<style>
+        #user_today_print th, #user_today_food_print th{
+            height: 30px;
+            background-color:darkcyan;
+        }
+        #user_today_print tr td:nth-child(1){
+            font-weight: bold;
+        }
+        #user_today_print,#user_today_food_print{
+            width: 100%;
+        }
+        #pddding_p{
+            padding-top: 20px;
+        }
+        #user_today_print tr td,#user_today_food_print tr td{
+            border-bottom: 1px solid black;
+            text-align: center;
+        }
+        #user_today_print tfoot tr:first-child{
+            background-color:darkcyan;
+            font-weight: bold;
+        }
+</style>
+<script type="text/javascript" src = "../../../js/jqurey/jquery-3.6.0.js"></script>
+<script type="text/javascript" src = "../../../js/Manager/Manager_oneday.js"></script>
 <body>
-    하루 매출
+    <p style="text-align: center;">하루 이용권 매출</p>
+    <table id ="user_today_print">
+        <thead>
+            <tr><th>날짜</th><th>아이디</th><th>이용시간</th><th>매출</th></tr>
+        </thead>
+        <tfoot>
+        </tfoot>
+    </table>
+    <p id = "pddding_p" style="text-align: center;">음식 매출</p>
+    <table id ="user_today_food_print">
+        <thead>
+            <tr><th>라면</th><th>떡볶이</th><th>피자</th><th>아메키라노</th><th>아이스티</th><th>콜라</th><th>매출</th></tr>
+        </thead>
+        <tfoot>
+        </tfoot>
+    </table>
 </body>
+
 </html>

@@ -6,7 +6,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한달 이용</title>
 </head>
+<style>
+    #user_month_print th, #user_month_food_print th{
+        background-color:darkcyan;
+        height: 30px;
+    }
+    #user_month_print tr td:nth-child(1), #user_month_food_print tr td:nth-child(1){
+        font-weight: bold;
+    }
+    #user_month_print, #user_month_food_print{
+        width: 100%;
+    }
+    #user_month_print tr td,#user_month_food_print tr td{
+        border-bottom: 1px solid black;
+        text-align: center;
+    }
+
+</style>
+<script type="text/javascript" src = "../../../js/jqurey/jquery-3.6.0.js"></script>
 <body>
-    한달 이용
+    <p style="text-align: center; ">한달 매출</p>
+    <table id ="user_month_print">
+        <tr><th>날짜</th><th>이용 시간</th><th>매출</th></tr>
+    </table>
+    
+    <p id = "pddding_p" style="text-align: center;">음식 매출</p>
+    <table id ="user_month_food_print">
+        <thead>
+            <tr><th>날짜</th><th>라면</th><th>떡볶이</th><th>피자</th><th>아메키라노</th><th>아이스티</th><th>콜라</th><th>매출</th></tr>
+        </thead>
+        <tfoot>
+        </tfoot>
+    </table>
+    <script>
+        const user_use = function(userid, use_date, use_start_time, use_hour, use_pay_sum, use_esc){
+            this.userid = userid;
+            this.use_date = use_date;
+            this.use_start_time = use_start_time;
+            // this.buy_food = buy_food; 
+            this.use_hour = use_hour;
+            this.use_pay_sum = use_pay_sum;
+            this.use_esc = use_esc;
+            // this.pay_chk = pay_chk;
+        };
+        user_month_print();
+        user_month_food_prints();
+
+        function getKeyIndex(arr, element){
+            for(let i = 0; i < arr.length; i++){
+                // console.log("arr[i].key");
+                // console.log(arr[(element.use_date.split('/')[0] +"/"+ element.use_date.split('/')[1])]);
+                // Object.keys(arr).includes((element.use_date.split('/')[0] +"/"+ element.use_date.split('/')[1]))
+                // console.log("arr.keys()");
+                // console.log(arr.keys());
+                if(arr.keys().includes((element.use_date.split('/')[0] +"/"+ element.use_date.split('/')[1]))){
+                    return i;
+                }
+            }
+            return -1;
+        }
+        function user_month_food_prints(){
+            const day = [];
+            const entries = JSON.parse(localStorage.getItem('food_order')) || [];
+            // let foods = [];
+            let price = [];
+            $(entries).each(function(index, element){ 
+                let date = (element.use_date.split('/')[0] +"/"+ element.use_date.split('/')[1]);
+                
+                if(!day.includes(date))
+                    day.push(date);
+                
+            });
+            day.sort();
+            let foods = new Array(day.length);
+            for(var i = 0; i < foods.length; i++){
+                foods[i] = new Array(6);
+            }
+            console.log(entries);
+
+            $(entries).each(function(index, item){
+                let date = (item.use_date.split('/')[0] +"/"+ item.use_date.split('/')[1]);
+
+                let food_indexs = [0,0,0,0,0,0];
+                let sum = 0;
+                // console.log(item);
+                $(item.food).each(function(food_index, food_item){
+                    if(food_item.food_id == "라면"){
+                        food_indexs[0] += Number(food_item.food_num);
+                    }else if(food_item.food_id == "떡볶이"){
+                        food_indexs[1] += Number(food_item.food_num);
+                    }else if(food_item.food_id == "피자"){
+                        food_indexs[2] += Number(food_item.food_num);
+                    }else if(food_item.food_id == "아메리카노"){
+                        food_indexs[3] += Number(food_item.food_num);
+                    }else if(food_item.food_id == "아이스티"){
+                        food_indexs[4] += Number(food_item.food_num);
+                    }else if(food_item.food_id == "콜라"){
+                        food_indexs[5] += Number(food_item.food_num);
+                    }
+                    sum += Number(food_item.food_price);
+                });
+                console.log("day.indexOf(date)");
+                console.log(day.indexOf(date));
+                price[day.indexOf(date)] =  Number((price[day.indexOf(date)]) == null ? 0 : (price[day.indexOf(date)])) + Number(sum);
+
+                for(let i = 0; i < food_indexs.length; i++){
+                    foods[day.indexOf(date)][i] =  Number((foods[day.indexOf(date)][i]) == null ? 0 : (foods[day.indexOf(date)][i])) + food_indexs[i];
+                }
+                console.log('ㅇ');
+                console.log(foods[day.indexOf(date)]);
+            });
+            for(let a = day.length-1 ; a >= 0; a--){
+                const sum_o = `<tr><td>${day[a]}</td><td>${foods[a][0]}개</td><td>${foods[a][1]}개</td><td>${foods[a][2]}개</td><td>${foods[a][3]}개</td><td>${foods[a][4]}개</td><td>${foods[a][5]}개</td><td>${price[a]}원</td></tr>`;
+                $('#user_month_food_print tfoot').append(sum_o);
+            }
+            // $("#user_month_food_print tfoot").append(`<tr><td>${food_indexs[0]}개</td><td>${food_indexs[1]}개</td><td>${food_indexs[2]}개</td><td>${food_indexs[3]}개</td><td>${food_indexs[4]}개</td><td>${food_indexs[5]}개</td><td>${sum}원</td></tr>`);
+        }
+        function user_month_print(){
+            const entries = JSON.parse(localStorage.getItem('user_use')) || [];
+            const day = [];
+            const price = [];
+            const hour = [];
+            let sum  = 0;
+            $(entries).each(function(index, element){ 
+                let date = (element.use_date.split('/')[0] +"/"+ element.use_date.split('/')[1]);
+
+                if(!day.includes(date))
+                    day.push(date);
+
+            });
+            day.sort(); // 날짜 정렬
+            $(entries).each(function(index, element){ 
+                let date = (element.use_date.split('/')[0] +"/"+ element.use_date.split('/')[1]); // 날짜 가져오기
+
+                // console.log(day.indexOf(date));
+                // console.log(Number(element.use_hour * 60));
+                // console.log("(hour[day.indexOf(date)])"+(hour[day.indexOf(date)]));
+                hour[day.indexOf(date)] = Number((hour[day.indexOf(date)]) == null ? 0 : (hour[day.indexOf(date)])) + Number(element.use_hour * 60);
+                price[day.indexOf(date)] =  Number((price[day.indexOf(date)]) == null ? 0 : (price[day.indexOf(date)])) + Number(element.use_pay_sum);
+
+            });
+
+            //오름차순으로 출력
+            for(let a = day.length -1 ; a >= 0; a--){
+                sum += price[a];
+                const sum_o = `<tr><td>${day[a]}</td><td>${hour[a]}분</td><td>${price[a]}원</td></tr>`
+                $('#user_month_print').append(sum_o);
+            }
+        }
+    </script>
 </body>
 </html>

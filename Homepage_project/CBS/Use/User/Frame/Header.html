@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+    <style>
+        #logo {
+            position: absolute; right: 45%; bottom: 10%;
+            margin: auto;
+            text-align: center;
+        }
+        #user_times{
+            position: absolute; right: 10px; bottom: 10px;
+            text-align: right;
+        }
+        img{
+            border-radius: 50%; border : 10px solid rgba(160, 85, 85, 0.185)
+        }
+    </style>
+    <script type = "text/javascript" src="../../../js/jqurey/jquery-3.6.0.js"></script>
+    <script type = "text/javascript" src = "../../../js/User/User_timer.js"></script>
+</head>
+<body>
+    <div id = "logo">
+        <img src="../../../image/logo/logo.png" style="width: 60px; height: 60px;" onclick = "func_reaload();">
+    </div>
+    <div id = "user_times"></div>
+</body>
+</html>

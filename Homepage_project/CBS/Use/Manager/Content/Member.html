@@ -5,8 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 관리</title>
+    <script type="text/javascript" src = "../../../js/jqurey/jquery-3.6.0.js"></script>
+    <style>
+        #user_info_print th{
+            height: 30px;
+            background-color: darkcyan;
+        }
+        #user_info_print tr td:nth-child(1){
+            font-weight: bold;
+        }
+        #user_info_print{
+            width: 100%;
+        }
+        #user_info_print tr td{
+            border-bottom: 1px solid black;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    회원 관리
+    <p style="text-align: center;">회원 관리</p>
+    <table id ="user_info_print">
+        <tr><th>아이디</th><th>이름</th><th>핸드폰</th><th>가입일</th></tr>
+    </table>
 </body>
+<script>
+    user_print();
+    function user_print(){
+        const entries = JSON.parse(localStorage.getItem('info_user')) || [];
+        const result = entries.filter(element => element.mu == 'user');//저장된 회원 중 user만 가져오기
+        // email: ""
+        // mu: "user"
+        // password1: "a!1234567"
+        // phone: "01012341324"
+        // reg_Date: "2021/9/17"
+        // userid: "test1"
+        // username: "테스트1"
+        $(result).each((index, entry) => {
+            let info_o = `<tr><td>${entry.userid}</td><td>${entry.username}</td><td>${entry.phone}</td><td>${entry.reg_Date}</td></tr>`;
+            // console.log(info_o);
+            $('#user_info_print').append(info_o);
+        });
+
+    }
+</script>
 </html>

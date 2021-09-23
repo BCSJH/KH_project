@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 화면</title>
     <!-- 글꼴 추가-->
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
@@ -11,12 +11,36 @@
         /*글꼴 추가*/
         body{
             font-family: "Nanum Gothic", sans-serif;
+            height: 100%;
+            text-align: center;
         }
         span{
             padding: 5px;
             color : red;
         }
+        .width_p{
+            width: 130px;
+            padding-top: 10px;
+        }
+        form {
+            text-align: center;
+        }
+        table {
+            margin: auto;
+        }
+        .button_w {
+            background-color: teal;
+            border: 0px;
+            border-radius: 5px;
+            color: white;
+            width: 100%;
+            height: 30px;
+        }
+        span{
+            text-align: left;
+        }
     </style>
+    <script src="../js/jqurey/jquery-3.6.0.js"></script>
     <script src = "../js/Login_Join/Join.js"></script>
 </head>
 <body>
@@ -24,81 +48,89 @@
     - GET(기본값) : 사용자입력값 url노출
     - POST       : 사용자입력값 url노출되지 않음
 -->
-<form name = "joinFrm" target = "idpwd" action="Loginpage.html" method="GET">
+<form name = "joinFrm" target = "idpwd" method="get">
     <table>
         <tr>
-            <td><label for="userid">아이디 </label></td>
-            <td><input type="text" id="userid" name="userid"></td>
+            <td class ="width_p"><label for="userid">아이디 </label></td>
+            <td>: <input type="text" id="userid" name="userid"></td>
             <td><span id = "userid_msg"></span></td>
         </tr>
         <tr>
-            <td><label for="password1">비밀번호 </label></td>
-            <td><input type="password" id="password1" name="password1"></td>
+            <td class ="width_p"><label for="password1">비밀번호 </label></td>
+            <td>: <input type="password" id="password1" name="password1"></td>
             <td><span id = "password1_msg"></span></td>
         </tr>
         <tr>
-            <td><label for="password2_msg">비밀번호 확인 </label></td>
-            <td><input type="password" id="password2" name="password2"></td>
+            <td class ="width_p"> <label for="password2_msg">비밀번호 확인 </label></td>
+            <td>: <input type="password" id="password2" name="password2"></td>
             <td><span id = "password2_msg"></span></td>
         </tr>
         <tr>
-            <td><label for="username">이름 </label></td>
-            <td><input type="text" id="username" name="username"></td>
+            <td class ="width_p"><label for="username">이름 </label></td>
+            <td>: <input type="text" id="username" name="username"></td>
             <td><span id = "username_msg"></span></td>
         </tr>
         <tr>
-            <td><label for="phone">전화번호 </label></td>
-            <td><input type="text" id="phone" name="phone" maxlength="11" placeholder="01000000000"></td>
+            <td class ="width_p"><label for="phone">전화번호 </label></td>
+            <td>: <input type="text" id="phone" name="phone" maxlength="11" placeholder="01000000000"></td>
             <td><span id = "phone_msg"></span></td>
         </tr>
         <tr>
-            <td><label for="email">email (선택)</label></td>
-            <td><input type="text" id="email" name="email" placeholder="text@naver.com"></td>
+            <td class ="width_p"><label for="email">email (선택)</label></td>
+            <td>: <input type="text" id="email" name="email" placeholder="text@naver.com"></td>
             <td><span id = "email_msg"></span></td>
         </tr>
         <tr>
-            <td><input type="submit" value="회원가입"></td>
+            <td><input class = "button_w" type="button" value="로그인" onclick="func_reaload();"></td>
+            <td><input class = "button_w" type="reset" id = "reset_btn" value="초기화"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input class = "button_w" name = "submit_bnt" type="submit" value="회원가입"></td>
         </tr>
     </table>
 </form>
 
 <script>
+// $('#userid').onblur
 userid.onblur = e => {
+    console.log(userid);
     join_info_check(userid);
-}
+};
 username.onblur = e => {
     join_info_check(username);
-}
+};
 password1.onblur = e => {
     join_info_check(password1);
-}
+};
 password2.onblur = e => {
     join_info_check(password2);
-}
-
+};
 phone.onblur = e => {
     join_info_check(phone);
-}
+};
 email.onblur = e => {
     join_info_check(email);
-}
-
+};
+$("#reset_btn").click( e => {
+    $("[id*=_msg]").each(function(i,item){
+        $(this).text("");
+    });
+});
 document.joinFrm.onsubmit = e => {
     let joinform = document.joinFrm;
-    console.log(joinform);
+    // console.log(joinform);
     join(joinform);
     let span_red_check = joinform.getElementsByTagName("span");
     for(let info = 0; info < 6; info++){
-        console.log("쩌업");
         if(span_red_check.item(info).innerHTML !== ""){
             return false;
         }
-    }
+    };
+    info_save(joinform); // localStorage에 저장
+    $('[name = joinFrm]').attr('action', location.href="Loginpage.html");
     return true;
 }
 </script>
-
-<h1 id = "idcheck"></h1>
 <!--
     - html 속 html -
     https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=javaking75&logNo=140159769153

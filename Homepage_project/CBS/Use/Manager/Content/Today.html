@@ -5,8 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>현재 이용 회원</title>
+    <script type="text/javascript" src = "../../../js/jqurey/jquery-3.6.0.js"></script>
+    <style>
+        #user_today_print th{
+            height: 30px;
+            background-color:darkcyan;
+        }
+        #user_today_print tr td:nth-child(1){
+            font-weight: bold;
+        }
+        #user_today_print{
+            width: 100%;
+        }
+        #user_today_print tr td{
+            border-bottom: 1px solid black;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    현재 이용 회원
+    <p style="text-align: center; ">현재 이용 회원</p>
+    <table id ="user_today_print">
+        <tr><th>아이디</th><th>입장 시간</th><th>이용시간</th><th>지불금액</th></tr>
+    </table>
 </body>
+
+<script>
+    user_today_print();
+    function user_today_print(){
+        const entries = JSON.parse(localStorage.getItem('user_use')) || [];
+        console.log(entries);
+        const info = entries.filter(element => Number(element.use_esc) == 0); //저장된 회원 중 현재 이용중인 고객만 가져오기
+        // use_date: "2021/9/18"
+        // use_esc: 1
+        // use_hour: 0.05
+        // use_pay_sum: 500
+        // use_start_time: "18:0:53"
+        // userid: "test1"
+        console.log(info);
+        $(info).each((index, entry) => {
+            const use_hour = entry.use_hour * 60;
+            console.log(entry);
+            let info_o = `<tr><td>${entry.userid}</td><td>${entry.use_start_time}</td><td>${Math.round(use_hour,2)} 분</td><td>${entry.use_pay_sum}원</td></tr>`;
+
+            $('#user_today_print').append(info_o);
+        });
+
+    }
+</script>
 </html>

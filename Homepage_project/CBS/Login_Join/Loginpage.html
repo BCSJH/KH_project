@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 페이지</title>
     <!-- 글꼴 추가-->
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
@@ -11,42 +11,67 @@
         /*글꼴 추가*/
         body{
             font-family: "Nanum Gothic", sans-serif;
+            height: 100%;
         }
+        .width_p{
+            width: 80px;
+            padding-top: 10px;
+        }
+        .ipnut_p{
+            width: 200px;
+        }
+        .button_p{
+            width: 100%;
+            height: 30px;
+            background-color: teal;
+            border: 0px;
+            border-radius: 5px;
+            color: white;
+        }
+        table{
+            margin: auto;
+            margin-top: 5%;
+        }
+
+
+
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src = "../js/Login_Join/Login.js"></script>
-    <script>
-        function login(){
-            var id = document.getElementById('userId').value;
-            var idcheck = document.getElementById('idcheck');
-            idcheck.innerText = id; /*값 전달 완료*/    
-    }
-    </script>
 </head>
 <body>
     <!--
         - GET(기본값) : 사용자입력값 url노출
         - POST       : 사용자입력값 url노출되지 않음
     -->
-    <form target = "idpwd" action="Loginpage.html" method="GET">
+    <form name = "login">
         <table>
             <tr>
-                <td><label for="userId">아이디 </label></td>
-                <td><input type="text" id="userId" name="userId"></td>
+                <td class ="width_p"><label for="userId">아이디 </label></td>
+                <td colspan="2">: <input class ="ipnut_p" type="text" id="userId" name="userId"></td>
             </tr>
             <tr>
-                <td><label for="password">비밀번호 </label></td>
-                <td><input type="password" id="password" name="password"></td>
+                <td class ="width_p"><label for="password">비밀번호 </label></td>
+                <td colspan="2">: <input class ="ipnut_p" type="password" id="password" name="password"></td>
             </tr>
             <tr>
-                <td><input type="submit" value="로그인" onclick="login();"></td>
-              <!--  <td><input type="submit" value="로그인" onclick="login();"></td>-->
+                <td colspan="3"><input  class ="button_p" type="submit" value="로그인"></td>
+            </tr>
+            <tr>
+                <td><input class ="button_p" type="button" value="회원가입" onclick="location.href='Joinpage.html'">
+                <td><input class ="button_p" type="button" value="아이디 조회" onclick="location.href='SearchId.html'"></td>
+                <td><input class ="button_p" type="button" value="비밀번호 변경" onclick="location.href='ChangePwd.html'"></td>
             </tr>
         </table>
     </form>
-        <input type="button" value="회원가입" onclick="location.href='Joinpage.html'">
-        <input type="submit" value="아이디 조회" onclick="location.href='SearchId.html'">
-        <input type="submit" value="비밀번호 변경" onclick="location.href='ChangePwd.html'">
-        <h1 id = "idcheck"></h1>
+    <script>
+        document.login.onsubmit = e => {
+            const login_check = login();
+            return login_check;
+        };
+    </script>
+        
+        <!-- <h1 id = "idcheck"></h1> -->
     <!--
         - html 속 html -
         https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=javaking75&logNo=140159769153

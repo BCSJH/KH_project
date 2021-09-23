@@ -7,11 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>내용</title>
     <style>
- 
-    #Resume li:after{
+     #ResumMenu{
+        position: fixed;
+        text-align: center;
+        background-color:gray;
+        margin: auto;
+        width: 100%;
+        height: 50px;
+    }
+    #ResemMenu > #Resume{
+        margin-left: auto;
+        margin-right: auto;
+        
+    }
+    #Resume li:after {
 		content: ' |';
 	}
-	#Resume li:last-child:after{ /*마지막은 추가 안함*/
+	#Resume li:last-child:after { /*마지막은 추가 안함*/
 		content: '';
 	}
     #Resume{
@@ -26,27 +38,16 @@
         opacity: 0.5;
     }
     #Resume > li > #a_Home{
-        color:white;
-        opacity: 1;
+        color:black;
+        opacity: 0.5;
     }
+
     hr {
         border: 0;
         height: 5px;
         background: darkgray;
     }
-    #ResemMenu > #Resume{
-        margin-left: auto;
-        margin-right: auto;
-        
-    }
-    #ResumMenu{
-        position: fixed;
-        text-align: center;
-        background-color:gray;
-        margin: auto;
-        width: 100%;
-        height: 50px;
-    }
+
     #Content{
         display: none;
         background-color:#F5F5F5;
@@ -54,6 +55,7 @@
     #Content #Myself #myself_info{
         background-color: white;
     }
+
     table{
         width: 100%;
     }
@@ -64,8 +66,37 @@
     .CertificateT > tbody > tr:first-of-type{
         background-color: white;
     }
+    .illust_img{
+        width: 200px;
+        height: 150px;
+    }
+    #hobby{
+        display: none;
+        text-align: center;
+    }
+    #hobby_p, #p_info2{
+        display: inline-block;
+    }
+    #p_info1, #p_info2{
+        width: 300px;
+        height: 400px;
+    }
+    #p_info1{
+        margin-left: 20%;
+        position: absolute;
+        visibility: hidden;
+        background-color: lightgrey;
+    }
+    #p_info2{
+        margin-left: 70px;
+        position: absolute;
+        /* left: 60%; */
+        visibility: hidden;
+        background-color: lightgrey;
+    }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
     <script src="../js/Content.js"></script>
 </head>
 <body>
@@ -77,6 +108,7 @@
                 <li><a id = "a_Education" name = "a_check" href = "#Education" onclick="changes('a_Education');">학력사항</a></li>
                 <li><a id = "a_Career" name = "a_check" href = "#Career" onclick="changes('a_Career');">경력사항</a></li>
                 <li><a id = "a_Certificate" name = "a_check" href = "#Certificate" onclick="changes('a_Certificate');">보유 자격증</a></li>
+                <li><a id = "a_hobby" name = "a_check" href = "#hobby" onclick="changes('a_hobby');">관심사</a></li>
             </ul>
         </div>
         <div id = "Content">
@@ -189,8 +221,73 @@
                     </tbody>
                 </table>
             </div>
+            <div id = "hobby" class = "Content" style="background-color: white;">
+                <br><br>
+                <div id = "move_ogu" style="background-color: white; text-align: center;">
+                    <img id ="ogu" src= "../img/ogu/ogu2.gif" width="70px" height="70px">
+                    <h1 style="display: inline-block; vertical-align: middle; margin-top: -50px;">관심사</h1>
+                    <img id ="ogu" src= "../img/ogu/ogu2.gif" width="70px" height="70px" style="transform:rotate(0deg); -moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); position:relative; overflow: hidden; padding-top: 20px;">
+                </div>
+                <div id = "p_info1">
+                </div>
+                <div id = "hobby_p">
+                    <p id = "picture_p">1. Picture</p>
+                    <p id = "Maple_p">2. Maple</p>
+                    <p id = "Ogu_p">3. Ogu</p>
+                </div>
+                <div id = "p_info2">
+            </div>
         </div>
     </div>
+    <script>
+                
+        $("#picture_p").hover(function(){
+            $("#p_info1").children().remove();
+            const tag= `<p><b>사진찍기📷</b><br>
+                            <img src = "../img/illust/illust1_1.jpg" width="75px" height=65px">
+                            <img src = "../img/illust/illust2_2.jpg" width="75px" height="65px">
+                            <br><b>마음에 드는 사진 일러스트로 그리기🎨<b><br>
+                            <img src = "../img/illust/illust1.png" width="75px" height="65px">
+                            <img src = "../img/illust/illust2.jpg" width="75px" height="65px"><br>
+                            <img src = "../img/illust/illust3.jpg"width="160px" height="160px">
+                        </p>`;
+            $("#p_info1").append(tag);
+            $("#p_info1").css("visibility","visible");
+        },function(){
+            $("#p_info1").children().remove();
+            $("#p_info1").css("visibility","hidden");
+        });
 
+        $("#Maple_p").hover(function(){
+            $("#p_info2").children().remove();
+            const tag= `<p><b>요즘 즐겨하는 게임🎮</b><br>
+                            <img src = "../img/maple/maple1.jpg" width="150px" height=130px">
+                            <br><b>뽑기로 얻은 결과물👀<b><br>
+                            <img src = "../img/maple/maple2.jpg" width="150px" height="150px"><br>
+                            DEX DEX DEX 3combo✨
+                        </p>`;
+            $("#p_info2").append(tag);
+            $("#p_info2").css("visibility","visible");
+        },function(){
+            $("#p_info2").children().remove();
+            $("#p_info2").css("visibility","hidden");
+        });
+        
+        $("#Ogu_p").hover(function(){
+            $("#p_info1").children().remove();
+            const tag= `<p style = "background-color:white"><b>좋아하는 캐릭터</b><br>
+                            <img src = "../img/ogu/ogu1.gif" width="120px" height=120px">
+                            <img src = "../img/ogu/ogu3.gif" width="120px" height="120px"><br>
+                            <img src = "../img/ogu/ogu_p1.jpg" width="120px" height=120px">
+                            <img src = "../img/ogu/ogu_p2.jpg" width="120px" height="120px"><br>  
+                        </p>`;
+            $("#p_info2").append(tag);
+            $("#p_info2").css("visibility","visible");
+            $("#p_info2").css("background-color",'white')
+        },function(){
+            $("#p_info2").children().remove();
+            $("#p_info2").css("visibility","hidden");
+        });
+    </script>
 </body>
 </html>

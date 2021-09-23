@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src = "../../../js/jqurey/jquery-3.6.0.js"></script>
+    <style>
+        #food_info_print th{
+            height: 30px;
+            background-color:darkcyan;
+        }
+        #food_info_print tr td:nth-child(1){
+            font-weight: bold;
+        }
+        #food_info_print{
+            width: 100%;
+        }
+        #food_info_print tr td{
+            border-bottom: 1px solid black;
+            text-align: center;
+            height: 15px;
+            
+        }
+        input[name='order']{
+            border: 0px;
+            background-color: darkcyan;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+        }
+        .order_text{
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <p style="text-align: center;">음식 주문</p>
+    <table id ="food_info_print">
+        <!-- cook_chk: 0
+        food: [{food_id: "떡볶이", food_num: "1", food_price: "2500"},…]
+        use_date: "2021/9/18"
+        use_time: "18:16:58"
+        userid: "test1" -->
+        <tr><th>아이디</th><th>주문시간</th><th>음식이름</th><th>주문수량</th><th>전달완료</tr>
+    </table>
+</body>
+<script>
+    food_info_print();
+    function food_info_print(){
+        const entries = JSON.parse(localStorage.getItem('food_order')) || [];
+        
+        let today = new Date();
+
+        let year = today.getFullYear(); // 년도
+        let month = today.getMonth() + 1;  // 월
+        let date = today.getDate();  // 날짜
+        const today_ = year + "/" +month + "/" + date;// 2021/9/18
+
+        const use = entries.filter(element => element.use_date == today_);
+
+        $(use).each(function(index, item){
+            
+            for(let a = 0; a < item.food.length; a++){
+                let tags = `<tr><td>${item.userid}</td><td>${item.use_time}</td><td>${item.food[a].food_id}</td><td>${item.food[a].food_num}</td>`;
+                if(a == 0 && item.cook_chk == 0){//${item.userid},${item.use_date},${item.use_time}
+                    tags += `<td rowspan ="${item.food.length}"><input type="button" class = "order_text" name = "order" value="미완료" onclick="save_food_ordere('${item.userid}','${item.use_date}','${item.use_time}');"></td></tr>`;
+                }
+                else if(a == 0 && item.cook_chk == 1){
+                    tags += `<td class = "order_text" rowspan ="${item.food.length}">완료</td></tr>`;
+                }
+                console.log(tags);
+                $("#food_info_print").append(tags);
+            }
+
+        });
+
+    }
+    function save_food_ordere(userid, use_date, use_time){
+        console.log(userid);
+        console.log(use_date);
+        console.log(use_time);
+        const entries = JSON.parse(localStorage.getItem('food_order')) || [];
+        let entry = [];
+        // use_date: "2021/9/22"
+        // use_time: "23:27:1"
+        // userid: "test1"
+        for(let a = 0; a<entries.length; a++){
+            if(entries[a].userid == userid && entries[a].use_date == use_date && entries[a].use_time == use_time){
+                entry = entries[a];
+            }
+        }
+        const index = entries.indexOf(entry);
+        entries.splice(index, 1); // 해당 값만 지움
+        entry.cook_chk = 1;
+        entries.push(entry);
+        localStorage.setItem('food_order',JSON.stringify(entries));
+        location.reload();
+    }
+</script>
+</html>
